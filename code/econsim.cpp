@@ -15,6 +15,7 @@ public:
     void operator=(tuple<string,float,float> new_good){name=get<0>(new_good);price=get<1>(new_good);quantity=get<2>(new_good);};
     void operator++(int new_good){price=new_good+price;};
     void operator*(float size){quantity=quantity*size;};
+    float total(){return quantity* price;};
     friend ostream& operator<<(ostream& os, const good& obj)
     {
           os << "Name: "<<obj.name<<" ; "<<" Price: "<<obj.price<<" ; "<<" Quantity: "<<obj.quantity;
@@ -49,7 +50,7 @@ public:
     }
     void operator*(int num){_01_*num;_02_*num,_03_*num;}
     void operator=(gl list){_01_=list[1],_02_=list[2],_03_=list[3];}
-    int operator/(gl list)
+    float operator/(gl list)
     {
         float h=0;
         float h1=0;
@@ -90,7 +91,7 @@ public:
         production=Production;
         needs=Needs;
         money=0;
-        size=1;
+        size=2;
     };
     good products(gl atended_needs)
     {
@@ -99,10 +100,12 @@ public:
         {
             needs[i].newPrice(atended_needs[i]);
         }
-        
-        int perc =needs/atended_needs;
+        gl Needs=needs;
+        Needs*size;
+        float perc =atended_needs/Needs;
+        cout<<perc;
         good day_production=production;
-        day_production*(size*perc);
+        day_production*(size);
         return day_production;
     }
     gl request_needs(good sold_produce)
@@ -137,26 +140,79 @@ public:
     };
     ~build(){};
 };
-
-
+class pop
+{
+private:
+    float size;
+    gl needs;
+    float money;
+    good emp;
+public:
+    good Emp;
+    float size;
+    pop(){
+        size=10;
+        good Epm("employes",1.0,7.5);
+        emp=Epm;
+        market Market;
+        float price=Market("grains","price");
+        good grain("grains",1.5,5);
+        good def;
+        gl Needs(grain,def,def);
+        needs=Needs;
+        money=0;
+        Emp=emp;
+    };
+    gl poprequest(gl need_meet)
+    {
+        float acum;
+        for (int i = 1; i < 4; i++)
+        {
+            acum=acum+need_meet[i].total();
+        }
+        money=money-acum;
+        gl nextNeed=needs;
+        nextNeed*size;
+        float perc=nextNeed/need_meet;
+        if (perc>=0.75)
+        {
+            size++;
+        }else if (perc<0.5)
+        {
+            size--;
+        }
+        if (money<acum){
+            float per=money/acum;
+            nextNeed*per;
+        }
+        Emp=emp;
+        Emp*size;
+        return nextNeed;
+    };
+    void moneygained(good employ)
+    {
+        money=money+employ.total();
+    };
+    ~pop();
+};
+class market
+{
+private:
+    /* data */
+public:
+    market();
+    float operator()(string name,string thing="price"){};
+    ~market();
+};
 int main(){
+    printf("");
     ofstream textFile;
     textFile.open("econsim.csv");
-    good grains("grain",1.5,2.5);
-    good fertilizer("fertilizer",2,0.1);
     good def;
-    gl farm_needs(fertilizer,def,def);
-    good farm_productions;
-    build farm(grains,farm_needs);
+
     for (int i = 1; i < 15; i++)
     {
-    farm_needs*farm.size;
-    farm_productions=farm.products(farm_needs);
-    grains*farm.size;
-    farm_needs= farm.request_needs(grains);
-    textFile<<farm_productions<<endl;
-    farm.decisionmake();
+
     }
-    bool is =def.name!="none";
-    cout<<is<<endl;
+    cout<<endl;
 }
