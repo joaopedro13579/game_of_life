@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "econsim.hpp"
 int main()
 {
     sf::RenderWindow window(
