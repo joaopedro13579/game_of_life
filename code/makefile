@@ -28,3 +28,10 @@ $(TARGET): $(OBJ)
 
 clean:
 	rm -f $(OBJ) $(TARGET)
+econsim:
+	clear
+	g++ econsim_base_classes.cpp tester.cpp -o econsim
+	./econsim
+	rm -f econsim
+clear:
+	clear

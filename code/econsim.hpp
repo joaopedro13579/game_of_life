@@ -14,11 +14,10 @@ public:
     float price;
     float quantity;
     good(string Name="none",float price=0,float quantity=0);
-    good operator()(string name="none",float Price=0.0,float Quantity=0.0);
+    void operator()(string name="none",float Price=0.0,float Quantity=0.0);
     void newPrice(good new_good);
     void operator+(good new_good);
     void operator=(good new_good);
-    void operator=(tuple<string,float,float> new_good);
     void operator++(int new_good);
     void operator*(float size);
     float total();
@@ -27,7 +26,8 @@ public:
           os << "Name: "<<obj.name<<" ; "<<" Price: "<<obj.price<<" ; "<<" Quantity: "<<obj.quantity;
           return os;
     };
-};
+    bool operator==(good y);
+};//tested
 class gl
 {
 private:
@@ -36,14 +36,14 @@ private:
     good z;
 public:
     gl();
-    gl(good um,good two,good three);
-    good operator [](int index);
-    gl operator ()(good x(),good y(),good z());
-    void operator*(int num);
-    void operator=(gl list);
-    float operator/(gl list);
-    ~gl();    
-};
+    good operator [](int index);//check
+    void operator ()(good x,good y,good z);//check
+    void operator*(int num);//check
+    void operator=(gl list);//check
+    float operator/(gl list);//check?
+    ~gl();    //check
+    friend std::ostream& operator<<(std::ostream& os, const gl& obj);//check
+};//tested
 class build
 {
 private:
@@ -54,25 +54,30 @@ private:
     string name="none";
 public:
     int size;
-    build(good Production(),gl Needs());
+    build(){};//check
+    void operator()(good Production,gl Needs);
     good products(gl atended_needs);
     gl request_needs(good sold_produce);
     void decisionmake();
-    ~build();
+    ~build();//check
+    friend std::ostream& operator<<(std::ostream& os, const build& obj);//check
 };
 class pop
 {
 private:
     gl needs;
-    float money;
+
     good emp;
 public:
-    good Emp;
     float size;
-    pop();
+    float money;
+    pop();//check
+    void operator()(int size,gl Needs);//check
     gl poprequest(gl need_meet);
-    void moneygained(good employ);
-    ~pop();
+    void moneygained(good employ);//check
+    good New_emp();//check
+    friend std::ostream& operator<<(std::ostream& os, const pop& obj);//check
+    ~pop();//check
 };
 class market
 {

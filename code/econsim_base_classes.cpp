@@ -5,7 +5,9 @@
 #include <unordered_map>
 #include "econsim.hpp"
 using namespace std;
-    good good::operator()(string Name="none",float Price=0.0,float Quantity=0.0){name=Name;price=Price;quantity=Quantity;}
+    //good
+    void good::operator()(string Name,float Price,float Quantity)
+    {name=Name;price=Price;quantity=Quantity;}
     void good::newPrice(good new_good){price=new_good.price;};
     void good::operator+(good new_good){quantity=quantity+new_good.quantity;};
     void good::operator=(good new_good){name=new_good.name;price=new_good.price;quantity=new_good.quantity;};
@@ -13,14 +15,32 @@ using namespace std;
     void good::operator*(float size){quantity=quantity*size;};
     float good::total(){return quantity* price;};
     good::good(string Name,float Price,float Quantity){name=Name;price=Price;quantity=Quantity;};
-    
-    gl gl::operator()(good X(),good Y(),good Z())
+    bool good::operator==(good x)
     {
-        x=X();
-        y=y();
-        x=z();
+        if (x.quantity==quantity&& x.price==price,x.name==name)
+        {
+            return true;
+        }else
+        {
+            return false;
+        }
+        
+        
+    };
+    //good list
+
+
+
+
+
+    void gl::operator()(good X,good Y,good Z)
+    {
+        x=X;
+        y=Y;
+        z=Z;
+
     }
-    gl::gl(good um,good two,good three){x=um;y=two;z=three;};
+    gl::gl(){};
     good gl::operator [](int index)
     {
         if (index==1){
@@ -34,6 +54,8 @@ using namespace std;
         }else
         {
             cout<<"error index out of range"<<endl;
+            good c;
+            return c;
         } 
     }
     void gl::operator*(int num){x*num;y*num,z*num;}
@@ -59,17 +81,34 @@ using namespace std;
             h2 =(z.quantity/list[3].quantity);
             h4++;
         }
-        int perc=h+h1+h2/h4;
+        if (h==0&& h1==0 && h2==0 && h4==0){h=1;h4=1;}
+        float perc=h+h1+h2/h4;
         return perc;
     }
-    gl::~gl(){};  
-    build::build(good Production(),gl Needs())
+    gl::~gl(){}; 
+    std::ostream& operator<<(std::ostream& os, const gl& obj) 
     {
-        production=Production();
-        needs=Needs();
-        money=0;
-        size=2;
+        os << "x: " << obj.x << ";\ny: " << obj.y << ";\nz: " << obj.z<<";";
+        return os;
     };
+    
+    //build class
+
+
+
+
+    std::ostream& operator<<(std::ostream& os, const build& obj){
+        os<<"Name:"<<obj.name<<" ;\nneeds\n"<<obj.needs<<";\ngood:"<<obj.production<<";\nmoney:"<<obj.money<<" ;size:"<<obj.size<<";";
+        return os;
+    }//check
+    void build::operator()(good Production,gl Needs)
+    {
+        name=Production.name;
+        production=Production;
+        needs=Needs;
+        money=0;
+        size=1;
+    };//check
     good build::products(gl atended_needs)
     {
         money=money+needs[1].price*atended_needs[1].quantity+needs[3].price*atended_needs[3].quantity+needs[2].price*atended_needs[2].quantity;
@@ -80,11 +119,11 @@ using namespace std;
         gl Needs=needs;
         Needs*size;
         float perc =atended_needs/Needs;
-        cout<<perc;
+        cout<<size<<endl;
         good day_production=production;
         day_production*(size);
         return day_production;
-    }
+    }//check
     gl build::request_needs(good sold_produce)
     {
         float gained=(sold_produce.price*sold_produce.quantity);
@@ -108,26 +147,31 @@ using namespace std;
         total=gained-acum;
         request_needs*size;
         return request_needs;
-    };
+    };//check
     void build::decisionmake(){
-        if (money>15 && total>0){
+        if (money>10 && total>0){
             size++;
             money=money-10;
         }
-    };
-    build::~build(){};
+    };//check
+    build::~build(){};//check
 
-    pop::pop(){
-        size=10;
-        good Epm("employes",1.0,7.5);
-        emp=Epm;
-        good grain("grains",0,5);
-        good def;
-        gl Needs(grain,def,def);
+    // population class
+
+
+    std::ostream& operator<<(std::ostream& os, const pop& obj)
+    {
+        os<<"size:"<<obj.size<<" money:"<<obj.money<<"\nneeds:\n"<<obj.needs<<"\nemployees:\n"<<obj.emp<<";";
+        return os;
+    }
+    pop::pop(){};
+    void pop::operator()(int Size,gl Needs)
+    {
+        size=Size;
+        emp("employes",1.0,0.75);
         needs=Needs;
         money=10;
-        Emp=emp;
-    };
+    }
     gl pop::poprequest(gl need_meet)
     {
         float acum;
@@ -150,15 +194,27 @@ using namespace std;
             float per=money/acum;
             nextNeed*per;
         }
-        Emp=emp;
-        Emp*size;
         return nextNeed;
+    };
+    good pop::New_emp()
+    {
+        good Newemp=emp;
+        Newemp*size;
+        return Newemp;
     };
     void pop::moneygained(good employ)
     {
         money=money+employ.total();
     };
     pop::~pop(){};
+    
+    
+    
+    //market class
+
+
+
+
     market::market(){};
     void market::operator=(good prod){Good=prod;};
     market::market(good prod)
