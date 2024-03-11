@@ -7,16 +7,17 @@ using namespace std;
 
 int main()
 {
-    pop farmers;
-    good grain("grains",1,7.0);
-    gl farmer_needs;
-    good def;
-    farmer_needs(grain,def,def);
-    farmers(10,farmer_needs);
-    good emp;
-    emp=farmers.New_emp();
-    farmers.moneygained(emp);
-    cout<<farmers.poprequest(farmer_needs)<<endl;
-    cout<<endl;
-    cout<<farmers;
+    market grain_market;
+    good grain("grains",1,10);
+    good harvest("grains",1,15);
+    good consumption("grains",1,-12.5);
+    grain_market(grain);
+    market mm;
+    good g;
+    mm=grain_market;
+    mm.change(harvest);
+    mm.change(consumption);
+    mm.price_deciding();
+    cout<<grain_market<<endl;
+    cout<<mm<<endl;
 }

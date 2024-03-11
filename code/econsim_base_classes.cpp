@@ -9,6 +9,7 @@ using namespace std;
     void good::operator()(string Name,float Price,float Quantity)
     {name=Name;price=Price;quantity=Quantity;}
     void good::newPrice(good new_good){price=new_good.price;};
+    void good::Price(float Price){price=price+Price;};
     void good::operator+(good new_good){quantity=quantity+new_good.quantity;};
     void good::operator=(good new_good){name=new_good.name;price=new_good.price;quantity=new_good.quantity;};
     void good::operator++(int new_good){price=price+new_good;};
@@ -195,53 +196,62 @@ using namespace std;
             nextNeed*per;
         }
         return nextNeed;
-    };
+    };//check
     good pop::New_emp()
     {
         good Newemp=emp;
         Newemp*size;
         return Newemp;
-    };
+    };//check
     void pop::moneygained(good employ)
     {
         money=money+employ.total();
-    };
+    };//check
     pop::~pop(){};
     
     
     
     //market class
 
-
-
-
-    market::market(){};
-    void market::operator=(good prod){Good=prod;};
-    market::market(good prod)
+    ostream& operator<<(ostream& os, const market& Market)
     {
-        Good=prod;
+        good obj;
+        obj=Market.Good;
+        os << "Name: "<<obj.name<<" ; "<<" Price: "<<obj.price<<" ; "<<" Quantity: "<<obj.quantity;
+        return os;
     };
-    good market:: _good_ (good g,good q)
+    market::market(){};
+    void market::operator=(market Market)
+    {
+        Good=Market.Good;
+        temp(Good.name,Good.price,0);
+        cout<<temp<<endl;
+    };
+    void market::operator()(good Prod)
+    {
+        Good=Prod;
+    };
+    void market::change(good change)
     {   
-        if (g.name!=Good.name && q.name!=Good.name)
+        if (change.name!=Good.name)
         {
-            good def;
-            return def;
-        } 
-        g+q;
-        G=g;
-        return g;
+            cout<<"error 001:good not in the right market"<<endl;
+        }else
+        {
+            temp+change;
+        }
+        cout<<temp<<endl;
     };
     good market::price_deciding()
     {
-        if (Good.quantity>=G.quantity)
+        if (temp.quantity>=0)
         {
-            G.price=G.price-1;
+            Good.Price(-0.1);
         }else
         {
-            G.price=G.price+1;
+            Good.Price(0.1);
         }
-        good next(Good.name,G.price,G.quantity);
-        return next;
+        Good+temp;
+        return Good;
     }
     market::~market(){};

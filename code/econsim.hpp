@@ -15,7 +15,8 @@ public:
     float quantity;
     good(string Name="none",float price=0,float quantity=0);
     void operator()(string name="none",float Price=0.0,float Quantity=0.0);
-    void newPrice(good new_good);
+    void Price(float price);
+    void newPrice(good New_Price);
     void operator+(good new_good);
     void operator=(good new_good);
     void operator++(int new_good);
@@ -82,13 +83,15 @@ public:
 class market
 {
 private:
-    good Good;
-    good G; 
+    good temp; 
 public:
-    market();
-    market(good prod);
-    good _good_ (good g,good q);
+    good Good;
+    friend ostream& operator<<(ostream& os, const market& obj);//check
+    market();//check
+    void operator=(market Market);//check
+    void operator()(good prod);//check
+    void change(good change);//check
     good price_deciding();
-    void operator=(good prod);
     ~market();
 };
+/*TESTED*/
