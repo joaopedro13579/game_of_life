@@ -90,7 +90,7 @@ public:
     market();//check
     void operator=(market Market);//check
     void operator()(good prod);//check
-    void change(good change);//check
+    void change(good change,int flag=0);//check
     good price_deciding();
     ~market();
 };
