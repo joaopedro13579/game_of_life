@@ -1,13 +1,6 @@
 # Makefile for sfml-app
 
-# Compiler
-CC := g++
 
-# Compiler flags for compilation
-CFLAGS := -c
-
-# Compiler flags for linking
-LDFLAGS := -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system
 
 # Source files
 SRC := game_engine.cpp
@@ -18,16 +11,16 @@ OBJ := $(SRC:.cpp=.o)
 # Target
 TARGET := sfml-app
 
-all: $(TARGET)
+all: game 
 
-$(TARGET): $(OBJ)
-	$(CC) $(OBJ) $(LDFLAGS)
-
+game: $(OBJ)
+	g++ $(OBJ) -o game -lsfml-graphics -lsfml-window -lsfml-system
+	./game
 %.o: %.cpp
-	$(CC) $(CFLAGS) $< -o $@
+	g++ -c $< -o $@
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(OBJ) game
 econsim:
 	clear
 	g++ econsim_base_classes.cpp tester.cpp -o econsim
