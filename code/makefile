@@ -1,26 +1,12 @@
-# Makefile for sfml-app
-
-
-
-# Source files
-SRC := game_engine.cpp
-
-# Object files
-OBJ := $(SRC:.cpp=.o)
-
-# Target
-TARGET := sfml-app
-
-all: game 
-
-game: $(OBJ)
-	g++ $(OBJ) -o game -lsfml-graphics -lsfml-window -lsfml-system
+game:
+	g++ -c gameEngine.cpp grid.cpp cellClass.cpp
+	g++ gameEngine.o grid.o cellClass.o -o game -lsfml-graphics -lsfml-window -lsfml-system
 	./game
-%.o: %.cpp
-	g++ -c $< -o $@
-
+	make clean
+	clear
 clean:
-	rm -f $(OBJ) game
+	rm -f game
+	rm -f gameEngine.o
 econsim:
 	clear
 	g++ econsim_base_classes.cpp tester.cpp -o econsim
@@ -28,3 +14,9 @@ econsim:
 	rm -f econsim
 clear:
 	clear
+teste:
+	g++ -c teste.cpp cellClass.cpp
+	g++ teste.o cellClass.o -o teste -lsfml-graphics -lsfml-window -lsfml-system
+	./teste
+	rm -f teste
+	rm -f teste.o
