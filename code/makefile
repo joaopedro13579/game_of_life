@@ -1,12 +1,15 @@
 game:
-	g++ -c gameEngine.cpp grid.cpp cellClass.cpp
-	g++ gameEngine.o grid.o cellClass.o -o game -lsfml-graphics -lsfml-window -lsfml-system
+	g++ -c gameEngine.cpp grid.cpp cellClass.cpp Board.cpp
+	g++ gameEngine.o grid.o cellClass.o Board.o -o game -lsfml-graphics -lsfml-window -lsfml-system
 	./game
 	make clean
 	clear
 clean:
-	rm -f game
+
 	rm -f gameEngine.o
+	rm -f grid.o
+	rm -f cellClass.o
+	rm -f Board.o
 econsim:
 	clear
 	g++ econsim_base_classes.cpp tester.cpp -o econsim
