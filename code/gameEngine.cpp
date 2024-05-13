@@ -15,7 +15,8 @@ int main()
     int coordinates3[2] = {10, 11};
     // Create a grid
     Grid grid(window.getSize().x, window.getSize().y, 8);
-    Board board(std::vector<Cell>{Cell(1, coordinates1), Cell(1, coordinates2), Cell(1, coordinates3)});
+    Board board(std::vector<Cell>{});
+    bool pause=false;
     // Main loop
     while (window.isOpen())
     {
@@ -24,14 +25,37 @@ int main()
         while (window.pollEvent(event))
         {
 
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed){
                 window.close();
+            }else if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+            {
+                sf::Vector2i position = sf::Mouse::getPosition(window);
+                board.setLive(position.x/8,position.y/8);
+            }else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
+            {
+                pause=!pause;
+            }
         }
         window.clear(sf::Color(85, 85, 85));
         grid.draw(window);
         board.draw(window);
-        sf::sleep(sf::milliseconds(500));
-        board.gameCycle();
+        if (pause==false)
+        {
+            board.gameCycle();
+        }else
+        {
+            sf::RectangleShape pause(sf::Vector2f(40,100));
+            pause.setFillColor(sf::Color(255,255,255,128));
+            pause.setPosition((desktopMode.width/2)-50, desktopMode.height/10);
+            sf::RectangleShape pause2(sf::Vector2f(40,100));
+            pause2.setFillColor(sf::Color(255,255,255,128));
+            pause2.setPosition((desktopMode.width/2)+40, desktopMode.height/10);
+            window.draw(pause);
+            window.draw(pause2);
+        }
+        
+        sf::sleep(sf::milliseconds(100));
+
 
         window.display();
     }

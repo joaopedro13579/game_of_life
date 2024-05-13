@@ -3,7 +3,6 @@
 #include <iostream>
 #include <vector>
 
-
 int Board::neighbours(int *coordinates)
 {
     int x = coordinates[0];
@@ -59,6 +58,7 @@ Board::Board(std::vector<Cell> cells)
 };
 void Board::gameCycle()
 {
+    rectangles.clear();
     double current[240][130];
     for (int i = 0; i < 240; i++)
     {
@@ -74,7 +74,7 @@ void Board::gameCycle()
         {
             coordinates[0] = i;
             coordinates[1] = j;
-            if ((neighbours(coordinates) == 2 && current[i][j] == 1) || neighbours(coordinates) == 3)
+            if ((neighbours(coordinates) == 2 && board[i][j] == 1) || neighbours(coordinates) == 3)
             {
                 current[i][j] = 1;
                 sf::RectangleShape rectangle = sf::RectangleShape(sf::Vector2f(5, 5));
@@ -102,5 +102,19 @@ void Board::draw(sf::RenderWindow &win)
     {
         win.draw(rectangles[i]);
     }
-    rectangles.clear();
+};
+void Board::setLive(int x, int y)
+{
+    if (board[x][y] == 0)
+    {
+        board[x][y] = 1;
+        sf::RectangleShape rectangle = sf::RectangleShape(sf::Vector2f(5, 5));
+        rectangle.setPosition((x * 8) + 2, (y * 8) + 2);
+        rectangle.setFillColor(sf::Color(255, 255, 255));
+        rectangles.push_back(rectangle);
+    }
+    else
+    {
+        board[x][y] = 0;
+    }
 };

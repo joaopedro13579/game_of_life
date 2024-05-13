@@ -13,4 +13,5 @@ public:
     Board(std::vector<Cell> cells);
     void gameCycle();
     void draw(sf::RenderWindow &win);
+    void setLive(int x,int y);
 };
